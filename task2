@@ -1,0 +1,75 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+import io
+
+data = pd.read_csv("/content/globalterrorism.csv", encoding='latin-1')
+
+data.head()
+
+data.sample(10)
+
+specific_data=data[["imonth","country"]]
+print(specific_data.head(10))
+
+data["country"].value_counts()
+
+print(data[10:21])
+sliced_data=data[10:21]
+print(sliced_data)
+
+
+
+data.columns
+
+
+print(data.head())
+
+
+print(data.describe())
+
+print(data.isnull().sum())
+
+plt.figure(figsize=(10, 6))
+sns.countplot(x='success', data=data)
+plt.title('Distribution of Success')
+plt.xlabel('Success')
+plt.ylabel('Count')
+plt.show()
+
+plt.figure(figsize=(12, 6))
+sns.countplot(x='attacktype1_txt', data=data, order=data['attacktype1_txt'].value_counts().index)
+plt.title('Distribution of Attack Types')
+plt.xlabel('Attack Type')
+plt.ylabel('Count')
+plt.xticks(rotation=90)
+plt.show()
+
+plt.figure(figsize=(12, 6))
+sns.countplot(x='gname', data=data, order=data['gname'].value_counts().iloc[:10].index)
+plt.title('Top 10 Terrorist Groups')
+plt.xlabel('Terrorist Group')
+plt.ylabel('Count')
+plt.xticks(rotation=90)
+plt.show()
+
+
+plt.figure(figsize=(12, 6))
+sns.countplot(x='country_txt', data=data, order=data['country_txt'].value_counts().iloc[:10].index)
+plt.title('Top 10 Countries with Most Attacks')
+plt.xlabel('Country')
+plt.ylabel('Count')
+plt.xticks(rotation=90)
+plt.show()
+
+
+correlation_matrix = data.corr()
+plt.figure(figsize=(10, 8))
+
+
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Heatmap')
+plt.show()
+
